@@ -1,9 +1,7 @@
 import Module from './module'
 import { assert, forEachValue } from '../util'
 
-// 模块集合
 export default class ModuleCollection {
-    //
     constructor(rawRootModule) {
         // register root module (Vuex.Store options)
         this.register([], rawRootModule, false)
@@ -27,7 +25,6 @@ export default class ModuleCollection {
         update([], this.root, rawRootModule)
     }
 
-    //
     register(path, rawModule, runtime = true) {
         if (process.env.NODE_ENV !== 'production') {
             assertRawModule(path, rawModule)
@@ -37,7 +34,6 @@ export default class ModuleCollection {
         if (path.length === 0) {
             this.root = newModule
         } else {
-            // 删掉最
             const parent = this.get(path.slice(0, -1))
             parent.addChild(path[path.length - 1], newModule)
         }
