@@ -293,6 +293,8 @@ function resetStoreVM(store, state, hot) {
     }
 }
 
+
+// 安装模块
 function installModule(store, rootState, path, module, hot) {
     const isRoot = !path.length
     const namespace = store._modules.getNamespace(path)
