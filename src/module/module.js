@@ -4,6 +4,7 @@ import { forEachValue } from '../util'
 // 模块
 export default class Module {
 
+    // 构造函数
     constructor(rawModule, runtime) {
         this.runtime = runtime
         // Store some children item
@@ -16,22 +17,27 @@ export default class Module {
         this.state = (typeof rawState === 'function' ? rawState() : rawState) || {}
     }
 
+    // 获取模块的命名空间
     get namespaced() {
         return !!this._rawModule.namespaced
     }
 
+    // 添加子模块
     addChild(key, module) {
         this._children[key] = module
     }
 
+    // 删除子模块
     removeChild(key) {
         delete this._children[key]
     }
 
+    // 获取子模块
     getChild(key) {
         return this._children[key]
     }
 
+    // 更新子模块
     update(rawModule) {
         this._rawModule.namespaced = rawModule.namespaced
         if (rawModule.actions) {
@@ -45,22 +51,26 @@ export default class Module {
         }
     }
 
+    //遍历子模块
     forEachChild(fn) {
         forEachValue(this._children, fn)
     }
 
+    //遍历 getter
     forEachGetter(fn) {
         if (this._rawModule.getters) {
             forEachValue(this._rawModule.getters, fn)
         }
     }
 
+    //遍历 action
     forEachAction(fn) {
         if (this._rawModule.actions) {
             forEachValue(this._rawModule.actions, fn)
         }
     }
 
+    //遍历 mutation
     forEachMutation(fn) {
         if (this._rawModule.mutations) {
             forEachValue(this._rawModule.mutations, fn)

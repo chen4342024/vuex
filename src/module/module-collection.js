@@ -1,20 +1,24 @@
 import Module from './module'
 import { assert, forEachValue } from '../util'
 
-// 模块集合
+// 模块采集
 export default class ModuleCollection {
-    //
+
+    // 注册模块
     constructor(rawRootModule) {
         // register root module (Vuex.Store options)
+        // 注册根模块
         this.register([], rawRootModule, false)
     }
 
+    //
     get(path) {
         return path.reduce((module, key) => {
             return module.getChild(key)
         }, this.root)
     }
 
+    // 根据path获取命名空间
     getNamespace(path) {
         let module = this.root
         return path.reduce((namespace, key) => {
@@ -23,21 +27,23 @@ export default class ModuleCollection {
         }, '')
     }
 
+    // 更新
     update(rawRootModule) {
         update([], this.root, rawRootModule)
     }
 
-    //
+    // 注册模块
     register(path, rawModule, runtime = true) {
         if (process.env.NODE_ENV !== 'production') {
             assertRawModule(path, rawModule)
         }
 
+        // 创建模块
         const newModule = new Module(rawModule, runtime)
         if (path.length === 0) {
             this.root = newModule
         } else {
-            // 删掉最
+            // 删掉最后一个
             const parent = this.get(path.slice(0, -1))
             parent.addChild(path[path.length - 1], newModule)
         }
@@ -50,6 +56,7 @@ export default class ModuleCollection {
         }
     }
 
+    // 注销
     unregister(path) {
         const parent = this.get(path.slice(0, -1))
         const key = path[path.length - 1]
@@ -59,6 +66,7 @@ export default class ModuleCollection {
     }
 }
 
+// 更新模块
 function update(path, targetModule, newModule) {
     if (process.env.NODE_ENV !== 'production') {
         assertRawModule(path, newModule)

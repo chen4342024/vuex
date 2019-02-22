@@ -1,3 +1,4 @@
+// 混入一些内容
 export default function(Vue) {
     const version = Number(Vue.version.split('.')[0])
 
@@ -8,8 +9,7 @@ export default function(Vue) {
         // for 1.x backwards compatibility.
         const _init = Vue.prototype._init
         Vue.prototype._init = function(options = {}) {
-            options.init = options.init ?
-                [vuexInit].concat(options.init) :
+            options.init = options.init ? [vuexInit].concat(options.init) :
                 vuexInit
             _init.call(this, options)
         }
@@ -22,6 +22,7 @@ export default function(Vue) {
     function vuexInit() {
         const options = this.$options
         // store injection
+        // 初始化的时候 ， 传入 new Vue({ store: store });
         if (options.store) {
             this.$store = typeof options.store === 'function' ?
                 options.store() :

@@ -4,6 +4,7 @@
  * @param {Object|Array} states # Object's item can be a function which accept state and getters for param, you can do something for state and getters in it.
  * @param {Object}
  */
+//减少使用vue.js 的getting state 时的代码量
 export const mapState = normalizeNamespace((namespace, states) => {
     const res = {}
     normalizeMap(states).forEach(({ key, val }) => {
