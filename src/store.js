@@ -140,7 +140,6 @@ export class Store {
             payload
         } = unifyObjectStyle(_type, _payload)
 
-        //
         const action = { type, payload }
         const entry = this._actions[type]
         if (!entry) {
@@ -224,6 +223,7 @@ export class Store {
         resetStoreVM(this, this.state)
     }
 
+
     unregisterModule(path) {
         if (typeof path === 'string') path = [path]
 
@@ -244,7 +244,7 @@ export class Store {
         resetStore(this, true)
     }
 
-    // 包装 commit 的执行，在执行前后的状态
+    // 包装 commit 的执行，设置执行前后的状态，方便监听更改是否来自外部更改
     _withCommit(fn) {
         const committing = this._committing
         this._committing = true
